@@ -8,6 +8,9 @@ Command line tool for converting textbundles to epub.
 ```
 
 ### Usage
+```shell
+> textbundle-to-epub *.textbundle
+```
 ```
 Usage:
   textbundle-to-epub [-o output] [--title title] [--cover cover] *.textbundle
