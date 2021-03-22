@@ -78,7 +78,7 @@ func run(c *cobra.Command, args []string) error {
 		return fmt.Errorf("output file %s already exist", *output)
 	}
 
-	exec := cmd.TextbundleToEpub{
+	exec := cmd.TextBundleToEpub{
 		DefaultCover: defaultCover,
 
 		Cover:   *cover,

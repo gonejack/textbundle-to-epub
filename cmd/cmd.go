@@ -18,7 +18,7 @@ import (
 	"github.com/gomarkdown/markdown"
 )
 
-type TextbundleToEpub struct {
+type TextBundleToEpub struct {
 	DefaultCover []byte
 
 	Cover   string
@@ -29,8 +29,8 @@ type TextbundleToEpub struct {
 	book *epub.Epub
 }
 
-func (t *TextbundleToEpub) Run(textbundles []string, output string) (err error) {
-	if len(textbundles) == 0 {
+func (t *TextBundleToEpub) Run(textBundles []string, output string) (err error) {
+	if len(textBundles) == 0 {
 		return errors.New("no textbundle given")
 	}
 
@@ -44,8 +44,8 @@ func (t *TextbundleToEpub) Run(textbundles []string, output string) (err error) 
 		}
 	}
 
-	for _, textbundle := range textbundles {
-		err = t.addTextbundle(textbundle)
+	for _, textbundle := range textBundles {
+		err = t.appendTextBundle(textbundle)
 		if err != nil {
 			err = fmt.Errorf("parse %s failed: %s", textbundle, err)
 			return
@@ -59,7 +59,7 @@ func (t *TextbundleToEpub) Run(textbundles []string, output string) (err error) 
 
 	return
 }
-func (t *TextbundleToEpub) addTextbundle(textbundle string) (err error) {
+func (t *TextBundleToEpub) appendTextBundle(textbundle string) (err error) {
 	basedir := textbundle
 
 	mdf, err := os.Open(filepath.Join(basedir, "text.markdown"))
@@ -103,17 +103,17 @@ func (t *TextbundleToEpub) addTextbundle(textbundle string) (err error) {
 
 	return
 }
-func (t *TextbundleToEpub) md2Html(md []byte) (html []byte) {
+func (t *TextBundleToEpub) md2Html(md []byte) (html []byte) {
 	return markdown.ToHTML(md, nil, nil)
 }
 
-func (t *TextbundleToEpub) setAuthor() {
+func (t *TextBundleToEpub) setAuthor() {
 	t.book.SetAuthor(t.Author)
 }
-func (t *TextbundleToEpub) setDesc() {
+func (t *TextBundleToEpub) setDesc() {
 	t.book.SetDescription(fmt.Sprintf("Epub generated at %s with github.com/gonejack/textbundle-to-epub", time.Now().Format("2006-01-02")))
 }
-func (t *TextbundleToEpub) setCover() (err error) {
+func (t *TextBundleToEpub) setCover() (err error) {
 	if t.Cover == "" {
 		temp, err := os.CreateTemp("", "textbundle-to-epub")
 		if err != nil {
@@ -132,10 +132,12 @@ func (t *TextbundleToEpub) setCover() (err error) {
 	if err != nil {
 		return fmt.Errorf("cannot detect cover mime type %s", err)
 	}
+
 	coverRef, err := t.book.AddImage(t.Cover, "epub-cover"+fmime.Extension())
 	if err != nil {
 		return fmt.Errorf("cannot add cover %s", err)
 	}
+
 	t.book.SetCover(coverRef, "")
 
 	return
