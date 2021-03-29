@@ -13,9 +13,9 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/bmaupin/go-epub"
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/gomarkdown/markdown"
+	"github.com/gonejack/go-epub"
 )
 
 type TextBundleToEpub struct {
@@ -30,6 +30,9 @@ type TextBundleToEpub struct {
 }
 
 func (t *TextBundleToEpub) Run(textBundles []string, output string) (err error) {
+	if len(textBundles) == 0 {
+		textBundles, _ = filepath.Glob("*.textbundle")
+	}
 	if len(textBundles) == 0 {
 		return errors.New("no textbundle given")
 	}

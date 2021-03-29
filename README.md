@@ -1,6 +1,6 @@
 # textbundle-to-epub
 
-Command line tool for converting textbundles to epub.
+Command line tool for converting textbundle to epub.
 
 ### Install
 ```shell
