@@ -31,9 +31,6 @@ type TextBundleToEpub struct {
 
 func (t *TextBundleToEpub) Run(textBundles []string, output string) (err error) {
 	if len(textBundles) == 0 {
-		textBundles, _ = filepath.Glob("*.textbundle")
-	}
-	if len(textBundles) == 0 {
 		return errors.New("no textbundle given")
 	}
 
