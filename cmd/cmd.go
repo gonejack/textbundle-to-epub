@@ -83,7 +83,7 @@ func (t *TextBundleToEpub) appendTextBundle(textbundle string) (err error) {
 
 		// be compatible with bear
 		if _, err := os.Stat(ref); errors.Is(err, os.ErrNotExist) {
-			src, _ = url.QueryUnescape(src)
+			src, _ = url.PathUnescape(src)
 			ref = filepath.Join(basedir, src)
 		}
 
