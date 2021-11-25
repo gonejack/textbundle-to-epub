@@ -4,8 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-
-	"io/ioutil"
+	"io"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -67,7 +66,7 @@ func (t *TextBundleToEpub) appendTextBundle(textbundle string) (err error) {
 		return
 	}
 
-	md, err := ioutil.ReadAll(mdf)
+	md, err := io.ReadAll(mdf)
 	if err != nil {
 		return
 	}
