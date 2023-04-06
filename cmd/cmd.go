@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/bmaupin/go-epub"
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/gomarkdown/markdown"
-	"github.com/gonejack/go-epub"
 )
 
 type TextBundleToEpub struct {
