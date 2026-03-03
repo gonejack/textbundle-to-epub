@@ -46,14 +46,14 @@ func (t *TextBundleToEpub) Run(textBundles []string, output string) (err error) 
 	for _, textbundle := range textBundles {
 		err = t.appendTextBundle(textbundle)
 		if err != nil {
-			err = fmt.Errorf("parse %s failed: %s", textbundle, err)
+			err = fmt.Errorf("parse %s failed: %w", textbundle, err)
 			return
 		}
 	}
 
 	err = t.book.Write(output)
 	if err != nil {
-		return fmt.Errorf("cannot write output epub: %s", err)
+		return fmt.Errorf("cannot write output epub: %w", err)
 	}
 
 	return
@@ -116,11 +116,11 @@ func (t *TextBundleToEpub) setCover() (err error) {
 	if t.Cover == "" {
 		temp, err := os.CreateTemp("", "textbundle-to-epub")
 		if err != nil {
-			return fmt.Errorf("cannot create tempfile: %s", err)
+			return fmt.Errorf("cannot create tempfile: %w", err)
 		}
 		_, err = temp.Write(t.DefaultCover)
 		if err != nil {
-			return fmt.Errorf("cannot write tempfile: %s", err)
+			return fmt.Errorf("cannot write tempfile: %w", err)
 		}
 		_ = temp.Close()
 
@@ -129,12 +129,12 @@ func (t *TextBundleToEpub) setCover() (err error) {
 
 	fmime, err := mimetype.DetectFile(t.Cover)
 	if err != nil {
-		return fmt.Errorf("cannot detect cover mime type %s", err)
+		return fmt.Errorf("cannot detect cover mime type %w", err)
 	}
 
 	coverRef, err := t.book.AddImage(t.Cover, "epub-cover"+fmime.Extension())
 	if err != nil {
-		return fmt.Errorf("cannot add cover %s", err)
+		return fmt.Errorf("cannot add cover %w", err)
 	}
 
 	t.book.SetCover(coverRef, "")
